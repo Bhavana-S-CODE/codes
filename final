@@ -1,0 +1,45 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class JobSelection {
+public static int[] findJobs(int[][] jobs) {
+int n = jobs.length;
+// Sort the jobs in decreasing order of their profit values
+Arrays.sort(jobs, new Comparator<int[]>() {
+public int compare(int[] a, int[] b) {
+return b[2] - a[2];
+}
+});
+int profit=0;
+// Initialize the end time of the previously selected job as -1
+int end_time = -1;
+// Initialize the count of selected jobs as 0
+int selected_jobs = 0;
+// Initialize the total profit as 0
+int total_profit = 0;
+for (int[] job : jobs) 
+{
+int start_time = job[0];
+int end_time1 = job[1];
+int cprofit = job[2];
+// Check if it's feasible to perform the job
+if (start_time >= end_time) 
+{
+    if(cprofit>profit){
+        profit=cprofit;
+    }
+//selected_jobs++;
+total_profit += cprofit;
+end_time = end_time;
+}
+}
+return new int[] {n - 1, total_profit-profit};
+}
+public static void main(String[] args) {
+int[][] jobs = {{900,1030,100}, {1000,1200,500}, {1100,1200,300}};
+int[] result = findJobs(jobs);
+System.out.println("Number of jobs left: " + result[0]);
+System.out.println();
+System.out.println("Total earnings of other employees: " + result[1]);
+}
+}
